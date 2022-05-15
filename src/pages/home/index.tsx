@@ -68,16 +68,19 @@ export default function Home() {
 
   const handleViewChange = (event: any, newValue: number) => {
     setView(newValue);
+    window.location.href = `/?view=${newValue}&page=${page}`;
   };
   const handlePageChange = (event: any, value: number) => {
     setPage(value);
-    window.location.href = "/?page=" + value;
+    window.location.href = `/?view=${view}&page=${value}`;
   };
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const p = parseInt(query.get("page") || "1", 10);
+    const v = parseInt(query.get("view") || "0", 10);
     setPage(p);
+    setView(v);
   }, [location]);
 
   useEffect(() => {
