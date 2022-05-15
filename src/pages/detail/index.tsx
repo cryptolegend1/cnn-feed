@@ -4,22 +4,13 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BlogData } from "../../types/BlogData";
 import { useAppSelector } from "../../hooks";
-import { getBlogData } from "../../slices/BlogSlice";
-import { useDispatch } from "react-redux";
 
 export default function Detail() {
-  const dispatch = useDispatch();
   const data: BlogData[] = useAppSelector((state) => {
     return state.blog && state.blog.blogs;
   });
   const [selectedBlog, setSelectedBlog] = useState<BlogData>();
-
   const { blogId } = useParams();
-
-  useEffect(() => {
-    dispatch(getBlogData());
-  }, [dispatch]);
-
   useEffect(() => {
     const id = parseInt(blogId || "0");
     setSelectedBlog(data[id]);

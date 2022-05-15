@@ -12,11 +12,9 @@ import {
 } from "@mui/material";
 import GridViewIcon from "@mui/icons-material/GridView";
 import ViewListIcon from "@mui/icons-material/ViewList";
-import { useDispatch } from "react-redux";
 import BlogListView from "../../components/BlogListView";
 import BlogCardView from "../../components/BlogCardView";
 import { BlogData } from "../../types/BlogData";
-import { getBlogData } from "../../slices/BlogSlice";
 import { useAppSelector } from "../../hooks";
 import { useLocation } from "react-router-dom";
 
@@ -54,7 +52,6 @@ export default function Home() {
   const [view, setView] = useState(0);
   const [page, setPage] = useState(1);
   const [selectedData, setSelectedData] = useState<BlogData[]>([]);
-  const dispatch = useDispatch();
   const location = useLocation();
 
   const isLoading = useAppSelector((state) => {
@@ -79,10 +76,9 @@ export default function Home() {
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
-    dispatch(getBlogData());
     const p = parseInt(query.get("page") || "1", 10);
     setPage(p);
-  }, [dispatch, location]);
+  }, [location]);
 
   useEffect(() => {
     const selected = data.slice(perPage * (page - 1), perPage * page);
